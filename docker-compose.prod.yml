@@ -11,5 +11,12 @@ services:
     #ports:
     #  - "3000:3000"
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=production        # For production, hide these user details for security reasons.
+      - MONGO_USER=${MONGO_USER}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - SESSION_SECRET=${SESSION_SECRET}
     command: node index.js
+  mongo:
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
