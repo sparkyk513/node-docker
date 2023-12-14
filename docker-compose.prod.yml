@@ -1,0 +1,15 @@
+version: "3"
+services:
+  nginx:
+    ports:
+     - "80:80"
+  node-app-container2:
+    build:
+      context: .
+      args:
+        - NODE_ENV=production
+    #ports:
+    #  - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    command: node index.js

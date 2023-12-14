@@ -1,0 +1,27 @@
+version: "3"
+services:
+  nginx:
+    image: nginx:stable-alpine
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - node-app-container2 # This needs to be added, or load-balancing will not work.
+  node-app-container2:
+    build: .
+    #ports:
+    #  - "3000:3000"
+    environment:
+      - PORT=3000
+    depends_on: 
+      - mongo # Allows mongo to run first, but it doesn't check to see if mongo is actually running
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=sparkyk
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongo-db:/data/db # volume named `mongo-db`
+  redis:
+      image: redis
+volumes: # Must have this entry to run file with named volume
+  mongo-db:
